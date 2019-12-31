@@ -1,0 +1,53 @@
+<resources>
+    <string name="app_name">GrainPoint Agent</string>
+    <string name="title_activity_new_farmer">NewFarmer</string>
+    <string name="regFarmer">Register Farmer</string>
+    <string name="fullName">fullname</string>
+    <string name="idType">identification type</string>
+    <string name="idNum">identification number</string>
+    <string name="phoneNumber">phone number</string>
+    <string name="state">state of origin</string>
+    <string name="localGovt">local govt</string>
+    <string name="community">community</string>
+    <string name="bankName">bank name</string>
+    <string name="accountNum">bank account number</string>
+    <string name="bvn">BVN</string>
+    <string name="farmSz">farm size (hectare)</string>
+    <string name="crops">crops</string>
+    <string name="grpCoorp">group or cooperative name</string>
+    <string name="grpRole">group role (chairman, secretary or member)</string>
+    <string name="pic">farmer picture</string>
+    <string name="gps">gps coordinates</string>
+    <string name="choseImg">choose image</string>
+
+    <string name="weight">weight</string>
+    <string name="moistCont">moisture content</string>
+    <string name="date">date</string>
+    <string name="submit">submit</string>
+
+
+    <string-array name="gender">
+        <item>male</item>
+        <item>female</item>
+    </string-array>
+
+    <string-array name="cropTyp">
+        <item>Rice</item>
+        <item>Wheat</item>
+        <item>Maize</item>
+        <item>Millet</item>
+        <item>Sorghum</item>
+        <item>Soybeans</item>
+    </string-array>
+
+    <string name="recColl">Collect Record Information</string>
+
+    <string name="pref_file">com.zeathon.preference_file</string>
+    <string name="pref_login_status">com.zeathon.preference_login_status</string>
+    <string name="pref_user_name">com.zeathon.preference_user_name</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="logout">Logout</string>
+    <string name="welcome">Welcome</string>
+</resources>

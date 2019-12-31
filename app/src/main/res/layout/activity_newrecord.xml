@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/gradientbackground"
+    tools:context=".NewFarmer">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/recColl"
+            android:textSize="25sp"
+            android:textColor="#ffffff"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"/>
+
+        <LinearLayout
+            android:layout_width="350dp"
+            android:layout_height="380dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/gradientbackground2"
+            android:orientation="vertical">
+
+            <AutoCompleteTextView
+                android:id="@+id/fullname"
+                android:layout_width="340dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:hint="@string/fullName"
+                android:layout_gravity="center"
+                android:inputType="textCapWords"
+                android:dropDownHeight="60dp"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:completionThreshold="5"
+                android:background="@drawable/edittextdrawable"/>
+            <!--EditText
+                android:id="@+id/gender"
+                android:layout_width="340dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:hint="@string/gender"
+                android:layout_gravity="center"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:background="@drawable/edittextdrawable"/-->
+            <AutoCompleteTextView
+                android:id="@+id/phoneNum"
+                android:layout_width="340dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:hint="@string/phoneNumber"
+                android:inputType="phone"
+                android:layout_gravity="center"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:completionThreshold="5"
+                android:dropDownHeight="60dp"
+                android:background="@drawable/edittextdrawable"/>
+            <!--AutoCompleteTextView
+                android:id="@+id/phonNum"
+                android:layout_width="340dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:hint="test phone number"
+                android:inputType="phone"
+                android:layout_gravity="center"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:background="@drawable/edittextdrawable"/-->
+            <Spinner
+                android:id="@+id/cropTyp"
+                android:layout_width="340dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:entries="@array/cropTyp"
+                android:layout_gravity="center"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:background="@drawable/edittextdrawable"/>
+            <EditText
+                android:id="@+id/weit"
+                android:layout_width="340dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:hint="@string/weight"
+                android:layout_gravity="center"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:background="@drawable/edittextdrawable"/>
+            <EditText
+                android:id="@+id/moistCnt"
+                android:layout_width="340dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:hint="@string/moistCont"
+                android:layout_gravity="center"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:background="@drawable/edittextdrawable"/>
+
+            <EditText
+                android:id="@+id/dt"
+                android:layout_width="340dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:hint="@string/date"
+                android:layout_gravity="center"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:background="@drawable/edittextdrawable"/>
+
+            <Button
+                android:id="@+id/submit"
+                android:layout_width="340dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"
+                android:background="#E53935"
+                android:text="@string/submit"
+                android:onClick="onClick"/>
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</ScrollView>
