@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">GrainPoint Agent</string>
     <string name="title_activity_new_farmer">NewFarmer</string>
+
+    <string name="title_location_permission">Request Location Permission</string>
+    <string name="ok">OK</string>
+    <string name="text_location_permission">Please give me permission</string>
+
     <string name="regFarmer">Register Farmer</string>
     <string name="fullName">fullname</string>
     <string name="idType">identification type</string>

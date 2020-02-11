@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -23,6 +24,7 @@ public class ViewFarmer extends AppCompatActivity {
         setContentView(R.layout.activity_view_farmer);
 
         ListView listView = findViewById(R.id.listView);
+        AutoCompleteTextView autoVw = findViewById(R.id.autoVw);
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Api.BASE_URL)
@@ -43,8 +45,9 @@ public class ViewFarmer extends AppCompatActivity {
                 for(int i=0; i<farmers.size(); i++){
 
                     farmerNames[i] = farmers.get(i).getFullName();
+                    //farmerNames[i] = farmers.get(i).getPhone_number();
                 }
-                listView.setAdapter(
+                autoVw.setAdapter(
                         new ArrayAdapter<String>(
                                 getApplicationContext(),
                                 android.R.layout.simple_list_item_1,

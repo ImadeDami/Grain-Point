@@ -7,13 +7,12 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.INSTALL_LOCATION_PROVIDER"
         tools:ignore="ProtectedPermissions" />
 
-    <!--uses-permission android:name="android.permission.CAMERA" />
+    <!--uses-permission android:name="android.permission.CAMERA" /-->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -43,6 +42,7 @@
         <activity android:name=".ViewFarmer" />
         <activity android:name=".DatePicket" />
         <activity android:name=".FetchMSQL" />
+        <activity android:name=".VwFarmer"/>
 
         <receiver android:name=".NetworkStateChecker">
             <intent-filter>

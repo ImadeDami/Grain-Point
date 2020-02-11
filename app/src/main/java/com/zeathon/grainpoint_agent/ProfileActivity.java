@@ -1,12 +1,21 @@
 package com.zeathon.grainpoint_agent;
 
+import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
-public class ProfileActivity extends AppCompatActivity {
+public class ProfileActivity extends AppCompatActivity  {
     TextView textViewId, textViewUsername, textViewEmail, textViewGender, newFmr, newRec, myFarmers, prices;
 
     @Override
@@ -40,14 +49,14 @@ public class ProfileActivity extends AppCompatActivity {
         newRec.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ProfileActivity.this, NewRecord.class);
+                Intent intent = new Intent(ProfileActivity.this, ViewFarmer.class);
                 startActivity(intent);
             }
         });
         prices.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ProfileActivity.this, DatePicket.class);
+                Intent intent = new Intent(ProfileActivity.this, ViewFarmer.class);
                 startActivity(intent);
             }
         });
@@ -77,6 +86,7 @@ public class ProfileActivity extends AppCompatActivity {
                 SharedPrefManager.getInstance(getApplicationContext()).logout();
             }
         });
+
     }
 }
 

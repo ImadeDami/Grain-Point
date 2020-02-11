@@ -1,14 +1,18 @@
 package com.zeathon.grainpoint_agent;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -16,6 +20,7 @@ import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
@@ -36,6 +41,7 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -47,9 +53,10 @@ public class NewFarmer extends AppCompatActivity implements View.OnClickListener
     EditText fullnam, phoneNum, idTyp, idNum, account, bvn, fmSz, pic;
     Spinner gendr, crps;
     Button submit, btnChoose;
-    TextView textViewId, myLocation;
+    TextView textViewId, myLocation, gpsAddr;
     ImageView Img;
     LocationManager locationManager;
+    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
 
     BroadcastReceiver broadcastReceiver;
     DataBaseHelper dataBaseHelper;
@@ -67,6 +74,8 @@ public class NewFarmer extends AppCompatActivity implements View.OnClickListener
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_newfarmer);
+
+        checkLocationPermission();
 
         Img = findViewById(R.id.imageView);
 
@@ -103,6 +112,7 @@ public class NewFarmer extends AppCompatActivity implements View.OnClickListener
         fmSz = findViewById(R.id.fmSz);
         //pic = findViewById(R.id.pic);
         myLocation = findViewById(R.id.gps);
+        gpsAddr = findViewById(R.id.gpsAddr);
 
         gendr = findViewById(R.id.gendr);
 
@@ -114,6 +124,14 @@ public class NewFarmer extends AppCompatActivity implements View.OnClickListener
 
         //submit = findViewById(R.id.submit);
         findViewById(R.id.submitBtn).setOnClickListener(this);
+
+      //  locationManager = (LocationManager) this.getSystemService(LOCATION_SERVICE);
+        //locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+        //Location location = locationManager.getLastKnownLocation(locationManager.NETWORK_PROVIDER);
+        //function for longitude and latitude coordinates:
+        //onLocationChanged(location);
+
+
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -130,6 +148,7 @@ public class NewFarmer extends AppCompatActivity implements View.OnClickListener
         Location location = locationManager.getLastKnownLocation(locationManager.NETWORK_PROVIDER);
         //function for longitude and latitude coordinates:
         onLocationChanged(location);
+
 
         btnChoose = findViewById(R.id.choseImg);
         if(null == Img) {
@@ -398,13 +417,108 @@ public class NewFarmer extends AppCompatActivity implements View.OnClickListener
         return null;
     }
 
+    public boolean checkLocationPermission() {
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.ACCESS_FINE_LOCATION)) {
+
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+                new AlertDialog.Builder(this)
+                        .setTitle(R.string.title_location_permission)
+                        .setMessage(R.string.text_location_permission)
+                        .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                //Prompt the user once explanation has been shown
+                                ActivityCompat.requestPermissions(NewFarmer.this,
+                                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                                        MY_PERMISSIONS_REQUEST_LOCATION);
+                            }
+                        })
+                        .create()
+                        .show();
+
+
+            } else {
+                // No explanation needed, we can request the permission.
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        MY_PERMISSIONS_REQUEST_LOCATION);
+            }
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_LOCATION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    // permission was granted, yay! Do the
+                    // location-related task you need to do.
+                    if (ContextCompat.checkSelfPermission(this,
+                            Manifest.permission.ACCESS_FINE_LOCATION)
+                            == PackageManager.PERMISSION_GRANTED) {
+
+                        //Request location updates:
+                        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 400, 1, this);
+                        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 400, 1, this);
+                    }
+
+                } else {
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+
+                }
+                return;
+            }
+
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 400, 1, this);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 400, 1, this);
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+
+            locationManager.removeUpdates(this);
+        }
+    }
+
+
 
     //@Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.submitBtn:
                 dataSubmit();
-
                 break;
 
             case R.id.choseImg:
@@ -423,8 +537,19 @@ public class NewFarmer extends AppCompatActivity implements View.OnClickListener
         double longitude = location.getLongitude();
         double latitude = location.getLatitude();
         myLocation.setText(String.format("%s\n%s", longitude, latitude));
+        Geocoder geo = new Geocoder(getApplicationContext(), Locale.getDefault());
+        try {
+            List<Address> addresses = geo.getFromLocation(latitude, longitude, 1);
+            //gpAddress.setText(addresses.get(0).getFeatureName() + ", " + addresses.get(0).getLocality() +", " + addresses.get(0).getAdminArea() + ", " + addresses.get(0).getCountryName());
+            // gpAddress.setText(addresses.get(0).getAddressLine(0) + ", " + addresses.get(0).getLocality() + ", " + addresses.get(0).getCountryName());
+            gpsAddr.setText(addresses.get(0).getAddressLine(0));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
+
+
 
     @Override
     public void onStatusChanged(String s, int i, Bundle bundle) {

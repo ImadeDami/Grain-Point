@@ -9,6 +9,6 @@ public interface Api {
 
     String BASE_URL = "http://namarkets.com/";
 
-    @GET("grainpoint/view.php")
+    @GET("grainpoint/viewfarmer.php")
     Call<List<Farmer>> getFarmers();
 }
