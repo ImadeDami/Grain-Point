@@ -49,7 +49,7 @@ public class ProfileActivity extends AppCompatActivity  {
         newRec.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ProfileActivity.this, ViewFarmer.class);
+                Intent intent = new Intent(ProfileActivity.this, NewRecord.class);
                 startActivity(intent);
             }
         });

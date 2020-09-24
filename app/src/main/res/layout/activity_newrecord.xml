@@ -23,6 +23,10 @@
             android:layout_gravity="center"
             android:layout_marginTop="20dp"/>
 
+        <ScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="350dp"
             android:layout_height="380dp"
@@ -30,6 +34,17 @@
             android:layout_marginTop="20dp"
             android:background="@drawable/gradientbackground2"
             android:orientation="vertical">
+
+            <AutoCompleteTextView
+                android:id="@+id/autoVw"
+                android:hint="enter farmer name"
+                android:completionThreshold="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <ListView
+                android:id="@+id/listView"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"/>
 
             <AutoCompleteTextView
                 android:id="@+id/fullname"
@@ -42,7 +57,7 @@
                 android:dropDownHeight="60dp"
                 android:paddingStart="5dp"
                 android:paddingEnd="5dp"
-                android:completionThreshold="5"
+                android:completionThreshold="1"
                 android:background="@drawable/edittextdrawable"/>
             <!--EditText
                 android:id="@+id/gender"
@@ -109,7 +124,7 @@
                 android:paddingEnd="5dp"
                 android:background="@drawable/edittextdrawable"/>
 
-            <EditText
+            <TextView
                 android:id="@+id/dt"
                 android:layout_width="340dp"
                 android:layout_height="40dp"
@@ -130,8 +145,9 @@
                 android:text="@string/submit"
                 android:onClick="onClick"/>
 
-
         </LinearLayout>
+
+        </ScrollView>
     </LinearLayout>
 
 

@@ -16,7 +16,9 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -32,12 +34,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class NewRecord extends AppCompatActivity {
     AutoCompleteTextView fullname, phoneNum;
     Spinner cropTyp;
-    EditText weit, moistCnt, dt;
+    TextView dt;
+    EditText weit, moistCnt;
     Button submit;
     DataBHelper dataBHelper;
     DataBaseHelper dataBaseHelper;
@@ -83,11 +87,56 @@ public class NewRecord extends AppCompatActivity {
         phoneNum = findViewById(R.id.phoneNum);
         cropTyp = findViewById(R.id.cropTyp);
 
+        ListView listView = findViewById(R.id.listView);
+        AutoCompleteTextView autoVw = findViewById(R.id.autoVw);
+
         //spinner = findViewById(R.id.phonNum);
         fetchJSON();
 
 
         submit = findViewById(R.id.submit);
+
+
+        // fetch farmer name from sql server starts here
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Api.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        Api api = retrofit.create(Api.class);
+
+        Call<List<Farmer>> call = api.getFarmers();
+
+        call.enqueue(new Callback<List<Farmer>>() {
+            @Override
+            public void onResponse(Call<List<Farmer>> call, Response<List<Farmer>> response) {
+
+                List<Farmer> farmers = response.body();
+
+                String[] farmerNames = new String[farmers.size()];
+                for (int i = 0; i < farmers.size(); i++) {
+
+                    farmerNames[i] = farmers.get(i).getFullName();
+                    //farmerNames[i] = farmers.get(i).getPhone_number();
+                }
+                fullname.setAdapter(
+                        new ArrayAdapter<String>(
+                                getApplicationContext(),
+                                android.R.layout.simple_list_item_1,
+                                farmerNames
+                        )
+                );
+
+            }
+
+            @Override
+            public void onFailure(Call<List<Farmer>> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT);
+
+            }
+        });
+
+        // fetch farmer name from sql server ends here
 
         //date = findViewById(R.id.date);
         dt.setOnClickListener(new View.OnClickListener() {
@@ -178,12 +227,15 @@ public class NewRecord extends AppCompatActivity {
             dt.requestFocus();
         }
 
+
+
+
         /** do user registration using api call **/
-        Call<ResponseBody> call = RetrofitClient2
+        Call<ResponseBody> call2 = RetrofitClient2
                 .getInstance()
                 .getNaSurvey()
                 .submitResponse(fName, phoneNm, crpTyp, weig, moistCn, dat);
-        call.enqueue(new Callback<ResponseBody>() {
+        call2.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
