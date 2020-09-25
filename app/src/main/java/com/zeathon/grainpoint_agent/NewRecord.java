@@ -93,9 +93,7 @@ public class NewRecord extends AppCompatActivity {
         //spinner = findViewById(R.id.phonNum);
         fetchJSON();
 
-
         submit = findViewById(R.id.submit);
-
 
         // fetch farmer name from sql server starts here
 
