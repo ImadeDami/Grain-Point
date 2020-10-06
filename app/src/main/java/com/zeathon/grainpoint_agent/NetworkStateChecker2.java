@@ -46,13 +46,15 @@ public class NetworkStateChecker2 extends BroadcastReceiver {
                     do {
                         //calling the method to save the unsynced name to MySQL
                         userSignUp(
-                                cursor.getInt(cursor.getColumnIndex(DataBaseHelper.COL1)),
-                                cursor.getString(cursor.getColumnIndex(DataBaseHelper.COL2)),
-                                cursor.getString(cursor.getColumnIndex(DataBaseHelper.COL3)),
-                                cursor.getString(cursor.getColumnIndex(DataBaseHelper.COL4)),
-                                cursor.getString(cursor.getColumnIndex(DataBaseHelper.COL5)),
-                                cursor.getString(cursor.getColumnIndex(DataBaseHelper.COL6)),
-                                cursor.getString(cursor.getColumnIndex(DataBaseHelper.COL7))
+                                cursor.getInt(cursor.getColumnIndex(DataBHelper.COL1)),
+                                cursor.getString(cursor.getColumnIndex(DataBHelper.COL2)),
+                                cursor.getString(cursor.getColumnIndex(DataBHelper.COL3)),
+                                cursor.getString(cursor.getColumnIndex(DataBHelper.COL4)),
+                                cursor.getString(cursor.getColumnIndex(DataBHelper.COL5)),
+                                cursor.getString(cursor.getColumnIndex(DataBHelper.COL6)),
+                                cursor.getString(cursor.getColumnIndex(DataBHelper.COL7)),
+                                cursor.getString(cursor.getColumnIndex(DataBHelper.COL8)),
+                                cursor.getString(cursor.getColumnIndex(DataBHelper.COL9))
                         );
                     } while (cursor.moveToNext());
                 }
@@ -61,12 +63,12 @@ public class NetworkStateChecker2 extends BroadcastReceiver {
         }
     }
 
-    private void userSignUp(final int id, final String fName, final String phoneNm, final String crpTyp, final String weig, final String moistCn, final String dat){
+    private void userSignUp(final int id, final String fName, final String phoneNm, final String state, final String lg, final String crpTyp, final String weig, final String moistCn, final String dat){
         /** do user registration using api call **/
         Call<ResponseBody> call = RetrofitClient2
                 .getInstance()
                 .getNaSurvey()
-                .submitResponse(fName, phoneNm, crpTyp, weig, moistCn, dat);
+                .submitResponse(fName, phoneNm, state, lg, crpTyp, weig, moistCn, dat);
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override

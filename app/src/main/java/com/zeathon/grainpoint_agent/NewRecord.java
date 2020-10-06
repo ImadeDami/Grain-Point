@@ -40,7 +40,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 public class NewRecord extends AppCompatActivity {
     AutoCompleteTextView fullname, phoneNum;
     Spinner cropTyp;
-    TextView dt;
+    TextView dt, tv_state, tv_lg;
     EditText weit, moistCnt;
     Button submit;
     DataBHelper dataBHelper;
@@ -83,6 +83,8 @@ public class NewRecord extends AppCompatActivity {
         weit = findViewById(R.id.weit);
         moistCnt = findViewById(R.id.moistCnt);
         dt = findViewById(R.id.dt);
+        tv_state = findViewById(R.id.tv_state);
+        tv_lg = findViewById(R.id.tv_lg);
         fullname = findViewById(R.id.fullname);
         phoneNum = findViewById(R.id.phoneNum);
         cropTyp = findViewById(R.id.cropTyp);
@@ -191,6 +193,8 @@ public class NewRecord extends AppCompatActivity {
     private void dataSubmit() {
         final String fName = fullname.getText().toString();
         final String phoneNm = phoneNum.getText().toString();
+        final String state = tv_state.getText().toString();
+        final String lg = tv_lg.getText().toString();
         final String crpTyp = cropTyp.getSelectedItem().toString();
         final String weig = weit.getText().toString();
         final String moistCn = moistCnt.getText().toString();
@@ -232,7 +236,7 @@ public class NewRecord extends AppCompatActivity {
         Call<ResponseBody> call2 = RetrofitClient2
                 .getInstance()
                 .getNaSurvey()
-                .submitResponse(fName, phoneNm, crpTyp, weig, moistCn, dat);
+                .submitResponse(fName, phoneNm, state,lg, crpTyp, weig, moistCn, dat);
         call2.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -241,11 +245,11 @@ public class NewRecord extends AppCompatActivity {
                     if (!obj.getBoolean("error")) {
                         //if there is a success
                         //storing the name to sqlite with status synced
-                        dataBHelper.addData(fName, phoneNm, crpTyp, weig, moistCn, dat, SYNC_STATUS_OK);
+                        dataBHelper.addData(fName, phoneNm, state, lg, crpTyp, weig, moistCn, dat, SYNC_STATUS_OK);
                     } else {
                         //if there is some error
                         //saving the name to sqlite with status unsynced
-                        dataBHelper.addData(fName, phoneNm, crpTyp, weig, moistCn, dat, SYNC_STATUS_FAILED);
+                        dataBHelper.addData(fName, phoneNm, state, lg, crpTyp, weig, moistCn, dat, SYNC_STATUS_FAILED);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -265,7 +269,7 @@ public class NewRecord extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                dataBHelper.addData(fName, phoneNm, crpTyp, weig, moistCn, dat, SYNC_STATUS_FAILED);
+                dataBHelper.addData(fName, phoneNm, state, lg, crpTyp, weig, moistCn, dat, SYNC_STATUS_FAILED);
                 //Toast.makeText(SurveyActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
                 Toast.makeText(NewRecord.this, "data has been saved on phone and will submitted once there is internet connection", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(NewRecord.this, MainActivity.class);

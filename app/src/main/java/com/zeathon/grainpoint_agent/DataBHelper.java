@@ -14,14 +14,16 @@ import static com.zeathon.grainpoint_agent.DataBaseHelper.TABLE_NAME;
 
 public class DataBHelper extends SQLiteOpenHelper {
     public static final String TAG = "DataBHelper";
-    public static final String TABLE_NAME = "newrecord2";
+    public static final String TABLE_NAME = "newrecord3";
     public static final String COL1 = "id";
     public static final String COL2 = "FULLNAM";
     public static final String COL3 = "PHONENUM";
-    public static final String COL4 = "CROPTYPE";
-    public static final String COL5 = "WEIGHT";
-    public static final String COL6 = "MOISTURECON";
-    public static final String COL7 = "DATE";
+    public static final String COL4 = "STATE";
+    public static final String COL5 = "LG";
+    public static final String COL6 = "CROPTYPE";
+    public static final String COL7 = "WEIGHT";
+    public static final String COL8 = "MOISTURECON";
+    public static final String COL9 = "DATE";
     public static final String SYNC_STATUS = "syncstatus";
 
     public DataBHelper(Context context) {
@@ -31,7 +33,7 @@ public class DataBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String createTable = "CREATE TABLE " + TABLE_NAME + " (id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "FULLNAM TEXT, PHONENUM TEXT, CROPTYPE TEXT, WEIGHT TEXT, MOISTURECON TEXT, DATE TEXT,  syncstatus integer)";
+                "FULLNAM TEXT, PHONENUM TEXT, STATE TEXT, LG TEXT, CROPTYPE TEXT, WEIGHT TEXT, MOISTURECON TEXT, DATE TEXT,  syncstatus integer)";
         db.execSQL(createTable);
 
     }
@@ -43,15 +45,17 @@ public class DataBHelper extends SQLiteOpenHelper {
 
     }
 
-    public boolean addData(String fName, String phoneNm, String crpTyp, String weig, String moistCn, String dat, int sync_status) {
+    public boolean addData(String fName, String phoneNm, String state, String lg, String crpTyp, String weig, String moistCn, String dat, int sync_status) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL2, fName);
         contentValues.put(COL3, phoneNm);
-        contentValues.put(COL4, crpTyp);
-        contentValues.put(COL5, weig);
-        contentValues.put(COL6, moistCn);
-        contentValues.put(COL7, dat);
+        contentValues.put(COL4, state);
+        contentValues.put(COL5, lg);
+        contentValues.put(COL6, crpTyp);
+        contentValues.put(COL7, weig);
+        contentValues.put(COL8, moistCn);
+        contentValues.put(COL9, dat);
         contentValues.put(SYNC_STATUS, sync_status);
         long result = db.insert(TABLE_NAME, null, contentValues);
 

@@ -12,6 +12,8 @@ public interface NewRecordInterface {
     Call<ResponseBody> submitResponse(
             @Field("fullName") String fullName,
             @Field("phone_number") String phone_number,
+            @Field("state") String state,
+            @Field("lg") String lg,
             @Field("cropType") String cropType,
             @Field("weight") String weight,
             @Field("moistureCont") String moistureCont,
