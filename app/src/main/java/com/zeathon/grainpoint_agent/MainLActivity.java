@@ -150,7 +150,7 @@ public class MainLActivity extends AppCompatActivity {
             editTextConfirmPassword.setSelectAllOnFocus(true);
             return;
         }
-        if(password != confirmPassword){
+        if(!password.equals(confirmPassword)){
             editTextPassword.setError("The passwords entered do not match! Re-enter matching passwords.");
             //editTextConfirmPassword.setText("");
             editTextPassword.requestFocus();
@@ -220,7 +220,8 @@ public class MainLActivity extends AppCompatActivity {
                         finish();
                         startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
                     } else {
-                        Toast.makeText(getApplicationContext(), "Some error occurred", Toast.LENGTH_SHORT).show();
+                        String message = obj.getString("message");
+                        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
